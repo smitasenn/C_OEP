@@ -4,6 +4,17 @@
 #include <math.h>
 #include <time.h>
 #include <unistd.h>
+/*<stdio.h>: This header file stands for "standard input/output" and provides functions for input and output operations, such as reading from and writing to files, printing to the console, etc.
+
+<string.h>: This header file provides various string manipulation functions, including functions for string copying, concatenation, comparison, searching, and more.
+
+<stdlib.h>: This header file includes functions for performing general utility functions, such as memory allocation and deallocation (malloc, free), random number generation (rand, srand), sorting and searching arrays, and other general-purpose functions.
+
+<math.h>: This header file contains mathematical functions and constants. It includes functions like trigonometric operations (sin, cos, tan), logarithmic operations (log, exp), rounding (round, floor, ceil), and more.
+
+<time.h>: This header file provides functions for manipulating date and time. It includes functions for getting the current time (time), formatting time (strftime), and performing various time-related calculations.
+
+<unistd.h>: This header file provides access to various POSIX (Portable Operating System Interface) functions, including system calls, file and directory operations, process management, and other low-level operations. It includes functions like fork (creating a new process), exec (executing a new program), and sleep (suspending the execution for a specified number of seconds).*/
 // structure to store songs from file to structured array
 typedef struct song_list
 {
@@ -51,7 +62,7 @@ void display_playlist()
         else
         {
                 ptr = first;
-                printf("%-25s%-20s%-25s\n", "|Song Name|", "|Artist Name|", "|Album Name|");
+                printf("%-25s%-20s%-25s%\n", "|Song Name|", "|Artist Name|", "|Album Name|");
                 while (ptr != NULL)
                 {
                         printf("%-25s", ptr->sname);
@@ -329,7 +340,11 @@ int main()
         /*fetching input from file*/
         for (i = 0; i < 200; i++)
         {
-                fscanf(song1, "%d", &songlist[i].song_id);
+                int result = fscanf(song1, "%d", &songlist[i].song_id);
+                if (result != 1) {
+                        // Failed to read the expected number of fields, indicating the end of the file
+                        break;
+                }
                 fscanf(song1, "%s", songlist[i].song_name);
                 fscanf(song1, "%s", songlist[i].singer_name);
                 fscanf(song1, "%d", &songlist[i].no_of_likes);
